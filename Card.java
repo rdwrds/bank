@@ -15,7 +15,10 @@ public class Card {
     
     public Card()
     {
-        cardNumber = generateCardNumber();
+        Random r = new Random();
+        this.cardNumber = generateCardNumber();
+        this.expiration = Integer.toString(r.nextInt(1,13)) + "/" + (Integer.toString(r.nextInt(22,100)));
+        this.CVV = r.nextInt(100,1000);
         totalCards.add(this);
     }
 
@@ -34,7 +37,7 @@ public class Card {
         }
         else
         {
-             //while our ID has not been found
+             //while this card hasn't been found
              while(!found) 
              {
                 subOne = Integer.toString(r.nextInt(10,100));
@@ -53,8 +56,6 @@ public class Card {
              }
              return fullNum;
         }
-
-        
     }
 
     //wont show entire card number- this can be a number
