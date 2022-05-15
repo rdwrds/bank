@@ -10,6 +10,26 @@ public class Account {
     //ID will not have a setter - as it will not change
     private final int ID;
 
+    //list of owned cards
+    //todo
+    //getters
+    //setter
+    public ArrayList<Card> cards = new ArrayList<Card>();
+
+    public String getCards()
+    {
+        String temp = "";
+        for(Card c : cards)
+        {
+            temp += (c instanceof DebitCard) ? "Debit Card\n" : "Credit Card\n";
+            temp += ("Card Number: ") + c.getCardNumber() + "\n";
+            temp += ("Expiration: ") + c.getExpiration() + "\n";
+            temp += ("CVV: ") + c.getCVV() + "\n";
+        }
+
+        return temp;
+    }
+
     //variable that keep track of total accounts across ALL objects
     public static ArrayList<Account> accounts = new ArrayList<Account>();
 
@@ -84,7 +104,7 @@ public class Account {
 
      String getPassword()
     {
-        return password;
+        return this.password;
     }
 
     public float getBalance()
@@ -138,6 +158,7 @@ public class Account {
                         break;
                     }
                 }
+                found = true;
             }
             return temp;
         }
@@ -146,12 +167,6 @@ public class Account {
     public int getID()
     {
         return ID;
-    }
-
-    //temporary to check
-    private String getPass()
-    {
-        return this.password;
     }
 
     @Override
