@@ -29,7 +29,7 @@ public class Card {
         String subOne = Integer.toString(r.nextInt(10,100));
         String subTwo = Integer.toString(r.nextInt(1000,10000));
         String subThree = Integer.toString(r.nextInt(1000,10000));
-        String subFour = Integer.toString(r.nextInt(1000,100000));
+        String subFour = Integer.toString(r.nextInt(1000,10000));
         String fullNum = "6" + subOne + "7" + "-" + subTwo + "-" + subThree + "-" + subFour;
         if(totalCards.size() == 0)
         {
