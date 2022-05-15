@@ -42,9 +42,13 @@ public class Account {
         accounts.add(this);
     }
 
-    public Account(int i)
+    public void displayAccount()
     {
-        this.ID = i;
+        System.out.println("First Name: " + this.fName 
+        + "\nLastName: " + this.lName
+        + "\nID: " + this.ID
+        + "\nBalance: " + this.balance
+        + "\n");
     }
 
     public String getFirstName()
