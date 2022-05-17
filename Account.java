@@ -9,6 +9,7 @@ public class Account {
     private float balance;
     //ID will not have a setter - as it will not change
     private final int ID;
+    Scanner s = new Scanner(System.in);
 
     //cards are set in constructor
     public ArrayList<Card> cards = new ArrayList<Card>();
@@ -75,7 +76,6 @@ public class Account {
     {
         String copyOne = " ";
         String copyTwo = "";
-        Scanner s = new Scanner(System.in);
         
         while(!copyOne.equals(copyTwo))
         {
@@ -84,7 +84,7 @@ public class Account {
             System.out.println("Re-enter Password\n");
             copyTwo = s.next();
         }
-        s.close();
+
 
         return copyOne;
     }
