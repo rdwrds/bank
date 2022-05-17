@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-
 public class Bank {
     public String name;
     public final boolean FDIC;
-    public int currentUser;
+    public Account currentUser;
     public boolean loggedIn;
-
+    Scanner s = new Scanner(System.in);
     private ArrayList<Account> customers = new ArrayList<Account>();
 
     public Bank(String n, boolean fdic)
@@ -22,7 +20,6 @@ public class Bank {
         String firstName;
         String lastName;
         float bal;
-        Scanner s = new Scanner(System.in);
         do
         {
             System.out.println("Please enter first name.");
@@ -47,41 +44,40 @@ public class Bank {
             customers.add(new Account(firstName, lastName, bal));
         }
 
-        s.close();
+        //s.close();
     }
 
     public void logIn()
     {
-        int x;
-        String pass;
-        Scanner s = new Scanner(System.in);
-        System.out.println("Please enter your ID");
-        x = s.nextInt();
-
-        System.out.println("Please enter your password.");
-        pass = s.next();
-        
-        if(customers.size() == 0)
+        boolean found = false;
+        do
         {
-            System.out.println("You must create an account!");
-            createAccount();
-        }
+            int x = 0;
+            String pass;
+            System.out.println("Please enter your ID");
+            x = s.nextInt();
 
-        for(Account a : customers)
-        {
-            if(a.getID() == x)
+            System.out.println("Please enter your password.");
+            pass = s.next();
+
+            for(Account a : Account.accounts)
             {
-                //this is not how password checking should go- 
-                //but for our purposes it will work!
-                if(pass == a.getPassword())
+                if(a.getID() == x)
                 {
-                    currentUser = a.getID();
+                    //this is not how password checking should go- 
+                    //but for our purposes it will work!
+                    if(pass.equals(a.getPassword()))
+                    {
+                        found = true;
+                        System.out.println("Log-in Successful! Welcome to " + this.name + "!");
+                        this.currentUser = a;
+                        this.loggedIn = true;
+                    }
                 }
-            }
+                //if the account with our ID was not found
+                if(!found) System.out.println("Your account does not exist, or your information was incorrect.\n");
         }
-
-
-        s.close();
+        } while(!found);
     }
 
 }
