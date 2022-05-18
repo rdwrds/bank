@@ -40,14 +40,16 @@ public class Main {
                     System.out.println("Hello " + user.getFirstName() + "! Would you like to:\n"
                         + "Select 1 to View Account Details\n" 
                         + "Select 2 to Deposit\n" 
-                        + "Select 3 Withdraw\n"
-                        + "Select 4 to Logout\n");
+                        + "Select 3 to Withdraw\n"
+                        + "Select 4 to create Credit Card\n"
+                        + "Select 5 to Logout\n");
                     accountOption = s.nextInt();
 
                     switch(accountOption)
                     {
                         case 1:
                             user.displayAccount();
+                            System.out.println(user.getCards());
                             break;
                         case 2:
                             float temp;
@@ -60,7 +62,11 @@ public class Main {
                             System.out.println("Enter how much money you'd like to deposit\nFormatted as 0.00");
                             temp2 = s.nextFloat();
                             user.withdraw(temp2);
+                            break;
                         case 4:
+                            user.createCard();
+                            break;
+                        case 6:
                             System.out.println("You have been logged out.");
                             daBank.currentUser = null;
                             daBank.loggedIn = false;
@@ -69,11 +75,12 @@ public class Main {
                             System.out.println("You inserted a " + accessOption + "Please select one of the three options above\n");
                             break;
                     }
-                }while(accountOption != 4);
+                }while(accountOption != 6);
             }
         }while(accessOption != 3);
         System.out.println("Program exited.\n");
 
+        //closes all other scanners, 
         s.close();
     }
 }
