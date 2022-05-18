@@ -156,6 +156,15 @@ public class Account {
         return ID;
     }
 
+    public void createCard()
+    {
+        int temp;
+        System.out.println("Enter 1 for a Credit Card\nEnter 2 For Debit Card");
+        temp = s.nextInt();
+        Card c = (temp == 1) ? new CreditCard(0.0f, 500.0f, 2.0) : new DebitCard();
+        cards.add(c);
+    }
+
     public String getCards()
     {
         String temp = "";
