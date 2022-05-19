@@ -42,6 +42,17 @@ public class Account {
         this.balance = bal;
         accounts.add(this);
     }
+    //constructor for creating temporoary account object that already exists.
+    //does not add account to accounts list (already exists if ran)
+    public Account(int id, String fN, String lN, String pass, float bal)
+    {
+        this.fName = fN;
+        this.lName = lN;
+        this.ID = id;
+        this.password = pass;
+        this.balance = bal;
+    }
+
 
     public void displayAccount()
     {

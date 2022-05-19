@@ -96,6 +96,7 @@ public class Bank {
             System.out.println(SQL);
             try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
                 Statement stmt = conn.createStatement();) {
+                //puts acc into database
                 stmt.executeUpdate(SQL);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -126,6 +127,14 @@ public class Bank {
                 Statement stmt = conn.createStatement();)
             {
                 ResultSet rs = stmt.executeQuery(SQL);
+                if(!rs.isBeforeFirst())
+                {
+                    System.out.println("Account not found.");
+                }
+                else
+                {
+
+                }
             }
             catch (Exception e)
             {
