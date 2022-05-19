@@ -108,7 +108,7 @@ public class Bank {
 
     public void logIn()
     {
-        boolean found = false;
+        //boolean found = false;
             int x = 0;
             String pass;
             System.out.println("Please enter your ID");
