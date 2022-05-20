@@ -1,5 +1,7 @@
 # Java implementation of a Bank object
 
+ ### All pre-mySQL implementation can be found in 'main'. All code implementing JDBC can be found in 'master'.
+
 ## Account
 The Account class is a basic outline of a bank account, detailing personal information such as, 
 - First and Last name
