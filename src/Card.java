@@ -2,7 +2,7 @@ import java.util.Random;
 
 import java.util.ArrayList;
 public class Card {
-    private String cardNumber = "XXXX-XXXX-XXXX-XXXX";
+    private String cardNumber = "XXXXXXXXXXXXXXXX";
     private String expiration;
     private int CVV;
 
@@ -61,7 +61,7 @@ public class Card {
     //wont show entire card number- this can be a number
     public String getCardNumber()
     {
-       if(this.cardNumber.substring(15, 19) == "XXXX")
+       if(this.cardNumber.substring(11, 15) == "XXXX")
         {
             return "Card does not exist.";
         }
