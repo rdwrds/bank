@@ -64,7 +64,7 @@ public class Main {
                             break;
                         case 3:
                             float temp2;
-                            System.out.println("Enter how much money you'd like to deposit\nFormatted as 0.00");
+                            System.out.println("Enter how much money you'd like to withdraw\nFormatted as 0.00");
                             temp2 = s.nextFloat();
                             user.withdraw(temp2);
                             break;
