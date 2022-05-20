@@ -1,6 +1,10 @@
+import javax.print.DocFlavor;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.sql.*;
+
+
 
 public class Account {
     private String fName;
@@ -56,16 +60,59 @@ public class Account {
 
     public void displayAccount()
     {
-        System.out.println("First Name: " + this.fName 
-        + "\nLastName: " + this.lName
-        + "\nID: " + this.ID
-        + "\nBalance: " + this.balance
-        + "\n");
+        try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+            Statement stmt = conn.createStatement();)
+        {
+            String SQL = "SELECT id, fname, lname, balance FROM accs"
+                        + "WHERE id=" + this.getID() + ";";
+            System.out.println(SQL);
+            ResultSet rs = stmt.executeQuery(SQL);
+            if(!rs.isBeforeFirst())
+            {
+                System.out.println("Account does not exist in Database.");
+            }
+            else
+            {
+                while(rs.next())
+                {
+                    System.out.println("Account ID: " + rs.getInt(1));
+                    System.out.println("First Name: " + rs.getString(2));
+                    System.out.println("Last Name: " + rs.getString(3));
+                    System.out.println("Balance: " + rs.getFloat(4));
+
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public String getFirstName()
     {
-        return fName;
+        String n = "";
+        try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+            Statement stmt = conn.createStatement();)
+        {
+            String SQL = "SELECT fname FROM accs "
+                    + "WHERE id=" + this.getID() + ";";
+            ResultSet rs = stmt.executeQuery(SQL);
+            if(!rs.isBeforeFirst())
+            {
+                System.out.println("Account does not exist in Database.");
+            }
+            else
+            {
+                rs.next();
+                n = rs.getString(1);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return n;
     }
 
     public void setFirstName(String n)
@@ -75,7 +122,28 @@ public class Account {
 
     public String getLastName()
     {
-        return lName;
+        String n = "";
+        try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+            Statement stmt = conn.createStatement();)
+        {
+            String SQL = "SELECT lname FROM accs "
+                    + "WHERE id=" + this.getID() + ";";
+            ResultSet rs = stmt.executeQuery(SQL);
+            if(!rs.isBeforeFirst())
+            {
+                System.out.println("Account does not exist in Database.");
+            }
+            else
+            {
+                rs.next();
+                n = rs.getString(1);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return n;
     }
 
     public void setLastName(String n)
@@ -102,12 +170,54 @@ public class Account {
 
      String getPassword()
     {
-        return this.password;
+        String n = "";
+        try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+            Statement stmt = conn.createStatement();)
+        {
+            String SQL = "SELECT pass FROM accs "
+                    + "WHERE id=" + this.getID() + ";";
+            ResultSet rs = stmt.executeQuery(SQL);
+            if(!rs.isBeforeFirst())
+            {
+                System.out.println("Account does not exist in Database.");
+            }
+            else
+            {
+                rs.next();
+                n = rs.getString(1);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return n;
     }
 
     public float getBalance()
     {
-        return balance;
+        float bal = 0.0f;
+        try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+            Statement stmt = conn.createStatement();)
+        {
+            String SQL = "SELECT balance FROM accs "
+                    + "WHERE id=" + this.getID() + ";";
+            ResultSet rs = stmt.executeQuery(SQL);
+            if(!rs.isBeforeFirst())
+            {
+                System.out.println("Account does not exist in Database.");
+            }
+            else
+            {
+                rs.next();
+                bal = rs.getFloat(1);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return bal;
     }
 
     public void withdraw(float amount)
@@ -118,7 +228,19 @@ public class Account {
         }
         else
         {
-            this.balance -= amount;
+            float diff = this.balance - amount;
+            String SQL = "UPDATE accs SET balance="
+                        + diff
+                        + " WHERE id=" + this.ID;
+            try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+                Statement stmt = conn.createStatement();)
+            {
+                stmt.executeUpdate(SQL);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -130,7 +252,19 @@ public class Account {
         }
         else
         {
-            this.balance += amount;
+            float diff = this.balance + amount;
+            String SQL = "UPDATE accs SET balance="
+                    + diff
+                    + " WHERE id=" + this.ID;
+            try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+                Statement stmt = conn.createStatement();)
+            {
+                stmt.executeUpdate(SQL);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -164,7 +298,9 @@ public class Account {
 
     public int getID()
     {
-        return ID;
+        //since only the ID is unique, any SQL query would be cyclic
+        //or might grab more than 1 account based on other fields
+        return this.ID;
     }
 
     public void createCard()
