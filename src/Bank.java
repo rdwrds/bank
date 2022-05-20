@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bank {
-
+    //all connections in try(); will be automatically closed after completed
     static final String DB_URL = "jdbc:mysql://localhost:3306/accounts";
 
     static final String USER = "root";
@@ -39,7 +39,6 @@ public class Bank {
             System.exit(1);
         }
 
-
     }
 
     public void createAccount()
@@ -74,9 +73,11 @@ public class Bank {
                     + ", " + "0.0);";
 
             try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-                Statement stmt = conn.createStatement();) {
-
-            } catch (SQLException e) {
+                Statement stmt = conn.createStatement();)
+            {
+                stmt.executeUpdate(SQL);
+            } catch (SQLException e)
+            {
                 e.printStackTrace();
             }
 
@@ -133,36 +134,27 @@ public class Bank {
                 }
                 else
                 {
-
+                    int id;
+                    String f;
+                    String l;
+                    String p;
+                    float b;
+                    while(rs.next()) //only executes once, since all IDs are unique
+                    {
+                        id = rs.getInt(1);
+                        f = rs.getString(2);
+                        l = rs.getString(3);
+                        p = rs.getString(4);
+                        b = rs.getFloat(5);
+                        this.currentUser = new Account(id, f, l, p, b);
+                        loggedIn = true;
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.printStackTrace();
             }
-
-            /*
-            do
-            {
-            for(Account a : Account.accounts)
-            {
-                if(a.getID() == x)
-                {
-                    //this is not how password checking should go-
-                    //but for our purposes it will work!
-                    if(pass.equals(a.getPassword()))
-                    {
-                        found = true;
-                        System.out.println("Log-in Successful! Welcome to " + this.name + "!");
-                        this.currentUser = a;
-                        this.loggedIn = true;
-                    }
-                }
-                //if the account with our ID was not found
-                if(!found) System.out.println("Your account does not exist, or your information was incorrect.\n");
-        }
-        } while(!found);
-             */
     }
 
 }
