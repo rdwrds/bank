@@ -17,7 +17,7 @@ public class Main {
             System.out.println("Welcome to " + daBank.name + "!");
             System.out.println("Select 1 to log into Online Banking\n" 
                              + "Select 2 to Create an account\n" 
-                             + "Select 3 to exit program.");
+                             + "Select 3 to exit program.\n");
             accessOption = s.nextInt();
             switch(accessOption)
             {
@@ -54,6 +54,7 @@ public class Main {
                     {
                         case 1:
                             user.displayAccount();
+                            System.out.println("Your owned cards are:");
                             System.out.println(user.getCards());
                             break;
                         case 2:
