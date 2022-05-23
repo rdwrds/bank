@@ -52,7 +52,6 @@ public class Bank {
             System.out.println("Please enter first name.");
             firstName = s.next();
         } while(firstName.equals(null) || firstName.equals(""));
-
         do
         {
             System.out.println("Please enter last name.");
@@ -65,6 +64,7 @@ public class Bank {
         if(bal == 0.0f)
         {
             Account temp = new Account(firstName, lastName);
+            temp.displayAccount();
             String SQL = "INSERT INTO" + ACC_TABLE + "VALUES("
                     + String.valueOf(temp.getID()) + ", "
                     + temp.getFirstName()
@@ -87,9 +87,9 @@ public class Bank {
         else
         {
             Account temp = new Account(firstName, lastName, bal);
-            String SQL = "INSERT INTO "
-                    + ACC_TABLE
-                    + " VALUES(" + String.valueOf(temp.getID())
+            System.out.printf("nam = " + temp.getFirstName());
+            String SQL = "INSERT INTO " + ACC_TABLE + " VALUES("
+                    + String.valueOf(temp.getID())
                     + ", " + "\'" + temp.getFirstName() + "\'"
                     +  ", " + "\'" + temp.getLastName()  + "\'"
                     + ", " + "\'" + temp.getPassword() +  "\'"
@@ -123,7 +123,6 @@ public class Bank {
                     + " WHERE id=" + x
                     + " AND "
                     + "pass=" + "\'" + pass + "\';";
-            System.out.println(SQL);
             try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
                 Statement stmt = conn.createStatement();)
             {
