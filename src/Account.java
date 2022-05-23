@@ -63,7 +63,7 @@ public class Account {
             Statement stmt = conn.createStatement();)
         {
             String SQL = "SELECT id, fname, lname, balance FROM accs"
-                        + "WHERE id=" + this.getID() + ";";
+                        + " WHERE id=" + this.getID() + ";";
             System.out.println(SQL);
             ResultSet rs = stmt.executeQuery(SQL);
             if(!rs.isBeforeFirst())
@@ -100,6 +100,8 @@ public class Account {
             if(!rs.isBeforeFirst())
             {
                 System.out.println("Account does not exist in Database.");
+                //b/c the object exists, we can grab its value instead of parsing DB
+                n = this.fName;
             }
             else
             {
@@ -131,6 +133,7 @@ public class Account {
             if(!rs.isBeforeFirst())
             {
                 System.out.println("Account does not exist in Database.");
+                n = this.lName;
             }
             else
             {
@@ -179,6 +182,7 @@ public class Account {
             if(!rs.isBeforeFirst())
             {
                 System.out.println("Account does not exist in Database.");
+                n = this.password;
             }
             else
             {
@@ -205,6 +209,7 @@ public class Account {
             if(!rs.isBeforeFirst())
             {
                 System.out.println("Account does not exist in Database.");
+                bal = this.balance;
             }
             else
             {
@@ -309,20 +314,57 @@ public class Account {
         temp = s.nextInt();
         Card c = (temp == 1) ? new CreditCard(0.0f, 500.0f, 2.0) : new DebitCard();
         cards.add(c);
+        System.out.println(c.getCardNumber() + " " + c.getExpiration() + " " + c.getCVV());
+
+        try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER,Bank.PASS);
+            Statement stmt = conn.createStatement();)
+        {
+            ++Card.cardID;
+            String SQL="INSERT INTO cards VALUES("
+                    + Card.cardID + ","
+                    + this.ID + ","
+                    + "\'Credit Card\',"
+                    + "\'" + c.getCardNumber()
+                    +"\'," + "\'9/72\',"
+                    + c.getCVV() + ");";
+            stmt.executeUpdate(SQL);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public String getCards()
     {
-        String temp = "";
-        for(Card c : cards)
+        String n = "";
+        try(Connection conn = DriverManager.getConnection(Bank.DB_URL, Bank.USER, Bank.PASS);
+            Statement stmt = conn.createStatement();)
         {
-            temp += (c instanceof DebitCard) ? "Debit Card\n" : "Credit Card\n";
-            temp += ("Card Number: ") + c.getCardNumber() + "\n";
-            temp += ("Expiration: ") + c.getExpiration() + "\n";
-            temp += ("CVV: ") + c.getCVV() + "\n";
+            String SQL = "SELECT cardNum, expiration, CVV, cardType FROM cards "
+                    + "WHERE id=" + this.getID() + ";";
+            ResultSet rs = stmt.executeQuery(SQL);
+            if(!rs.isBeforeFirst())
+            {
+                System.out.println("Account does not exist in Database.");
+            }
+            else
+            {
+                while(rs.next())
+                {
+                    n += "\nCard Type: " + rs.getString(4);
+                    n += "\nCard Number: " + rs.getString(1);
+                    n += "\nExpiration: " + rs.getString(2);
+                    n += "\nCVV: " + rs.getInt(3);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
 
-        return temp;
+        return n;
     }
 
     @Override
