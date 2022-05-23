@@ -2,6 +2,7 @@ import java.util.Random;
 
 import java.util.ArrayList;
 public class Card {
+    public static int cardID = 1;
     private String cardNumber = "XXXXXXXXXXXXXXXX";
     private String expiration;
     private int CVV;
@@ -30,7 +31,7 @@ public class Card {
         String subTwo = Integer.toString(r.nextInt(1000,10000));
         String subThree = Integer.toString(r.nextInt(1000,10000));
         String subFour = Integer.toString(r.nextInt(1000,10000));
-        String fullNum = "6" + subOne + "7" + "-" + subTwo + "-" + subThree + "-" + subFour;
+        String fullNum = "6" + subOne + "7"  + subTwo  + subThree  + subFour;
         if(totalCards.size() == 0)
         {
             return fullNum;
@@ -44,7 +45,7 @@ public class Card {
                 subTwo = Integer.toString(r.nextInt(1000,10000));
                 subThree = Integer.toString(r.nextInt(1000,10000));
                 subFour = Integer.toString(r.nextInt(1000,10000));
-                fullNum = "6" + subOne + "7" + "-" + subTwo + "-" + subThree + "-" + subFour;
+                fullNum = "6" + subOne + "7" + subTwo + subThree + subFour;
                 for(Card c : totalCards)
                 {
                     if(c.getCardNumber() == fullNum)
