@@ -64,7 +64,6 @@ public class Account {
         {
             String SQL = "SELECT id, fname, lname, balance FROM accs"
                         + " WHERE id=" + this.getID() + ";";
-            System.out.println(SQL);
             ResultSet rs = stmt.executeQuery(SQL);
             if(!rs.isBeforeFirst())
             {
@@ -355,7 +354,7 @@ public class Account {
                     n += "\nCard Type: " + rs.getString(4);
                     n += "\nCard Number: " + rs.getString(1);
                     n += "\nExpiration: " + rs.getString(2);
-                    n += "\nCVV: " + rs.getInt(3);
+                    n += "\nCVV: " + rs.getInt(3) + "\n";
                 }
             }
         }
