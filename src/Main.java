@@ -72,7 +72,7 @@ public class Main {
                         case 4:
                             user.createCard();
                             break;
-                        case 6:
+                        case 5:
                             System.out.println("You have been logged out.");
                             daBank.currentUser = null;
                             daBank.loggedIn = false;
@@ -81,7 +81,7 @@ public class Main {
                             System.out.println("You inserted a " + accessOption + "Please select one of the three options above\n");
                             break;
                     }
-                }while(accountOption != 6);
+                }while(accountOption != 5);
             }
         }while(accessOption != 3);
         System.out.println("Program exited.\n");
